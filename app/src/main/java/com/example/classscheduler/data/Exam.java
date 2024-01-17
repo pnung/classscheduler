@@ -12,5 +12,4 @@ public class Exam extends Task {
         this.examTime = examTime;
         this.examDuration = examDuration;
     }
-
 }
