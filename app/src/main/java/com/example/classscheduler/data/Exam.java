@@ -3,13 +3,14 @@ package com.example.classscheduler.data;
 public class Exam extends Task {
 
     private String examDate;
-    private String examTime;
+    private String examStartTime;
+    private String examEndTime;
     private String examDuration;
 
-    public Exam(String name, String examDate, String examTime, String examDuration) {
+    public Exam(String name, String examDate, String examStartTime, String examEndTime, String examDuration) {
         super(name);
         this.examDate = examDate;
-        this.examTime = examTime;
+        this.examStartTime = examStartTime;
         this.examDuration = examDuration;
     }
 
@@ -21,19 +22,20 @@ public class Exam extends Task {
         examDate = newExamDate;
     }
 
-    public String getExamTime() {
-        return examTime;
+    public String getExamStartTime() {
+        return examStartTime;
     }
 
-    public void setExamTime(String newExamTime) {
-        examTime = newExamTime;
+    public void setExamStartTime(String newExamStartTime) {
+        examStartTime = newExamStartTime;
     }
 
-    public String getExamDuration() {
-        return examDuration;
+    public String getExamEndTime() {
+        return examEndTime;
     }
 
-    public void setExamDuration(String newExamDuration) {
-        examDuration = newExamDuration;
+    public void setExamEndTime(String newExamEndTime) {
+        examEndTime = newExamEndTime;
     }
+
 }
