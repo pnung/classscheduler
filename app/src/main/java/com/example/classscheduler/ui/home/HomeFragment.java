@@ -33,23 +33,6 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-        ListView homeText = root.findViewById(R.id.home_text);
-        Button homeTestButton = root.findViewById(R.id.home_test_button);
-
-        ArrayAdapter<Task> myArrayAdapter;
-        ArrayList<Task> taskList = new ArrayList<>();
-        myArrayAdapter = new ArrayAdapter<Task>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, taskList);
-        homeText.setAdapter(myArrayAdapter);
-
-        homeTestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("hello");
-                myArrayAdapter.add(new Task("gnfasldjnkna"));
-            }
-        });
-
         return root;
     }
 
