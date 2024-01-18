@@ -9,4 +9,20 @@ public class Course extends Task {
         this.courseTime = courseTime;
         this.instructorName = instructorName;
     }
+
+    public String getCourseTime() {
+        return courseTime;
+    }
+
+    public void setCourseTime(String newCourseTime) {
+        courseTime = newCourseTime;
+    }
+
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String newInstructorName) {
+        instructorName = newInstructorName;
+    }
 }

@@ -43,7 +43,7 @@ public class TodoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 System.out.println("hello");
-                taskListArrayAdapter.add(new Task("gnfasldjnkna"));
+                taskListArrayAdapter.add(new Task("task"));
             }
         });
 

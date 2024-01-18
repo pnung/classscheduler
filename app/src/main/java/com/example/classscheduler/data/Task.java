@@ -20,4 +20,13 @@ public class Task {
     public String toString() {
         return String.format("name: %s, description: %s", name, description);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String newName) {
+        name = newName;
+    }
+
 }
