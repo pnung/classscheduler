@@ -1,4 +1,4 @@
-package com.example.classscheduler.ui.notifications;
+package com.example.classscheduler.ui.todo;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,18 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.classscheduler.databinding.FragmentNotificationsBinding;
+import com.example.classscheduler.databinding.FragmentTodoBinding;
 
-public class NotificationsFragment extends Fragment {
+public class TodoFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentTodoBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        TodoViewModel notificationsViewModel =
+                new ViewModelProvider(this).get(TodoViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentTodoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textNotifications;

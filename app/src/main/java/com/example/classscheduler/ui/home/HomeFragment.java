@@ -33,9 +33,6 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        final TextView textView = binding.homeText;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
 
         ListView homeText = root.findViewById(R.id.home_text);
         Button homeTestButton = root.findViewById(R.id.home_test_button);
