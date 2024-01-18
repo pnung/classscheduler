@@ -12,4 +12,28 @@ public class Exam extends Task {
         this.examTime = examTime;
         this.examDuration = examDuration;
     }
+
+    public String getExamDate() {
+        return examDate;
+    }
+
+    public void setExamDate(String newExamDate) {
+        examDate = newExamDate;
+    }
+
+    public String getExamTime() {
+        return examTime;
+    }
+
+    public void setExamTime(String newExamTime) {
+        examTime = newExamTime;
+    }
+
+    public String getExamDuration() {
+        return examDuration;
+    }
+
+    public void setExamDuration(String newExamDuration) {
+        examDuration = newExamDuration;
+    }
 }

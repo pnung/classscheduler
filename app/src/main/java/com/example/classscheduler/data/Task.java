@@ -28,4 +28,13 @@ public class Task {
     public static String taskListToString() {
         return taskList.toString();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String newName) {
+        name = newName;
+    }
+
 }

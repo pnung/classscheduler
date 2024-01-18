@@ -7,4 +7,5 @@ public class Assignment extends Task {
         super(assignmentName);
         this.courseName = courseName;
     }
+
 }
