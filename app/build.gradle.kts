@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.recyclerview)
     testImplementation(libs.junit)
+    implementation("androidx.cardview:cardview:1.0.0")
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
