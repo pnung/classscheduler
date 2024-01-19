@@ -4,7 +4,11 @@
     android:layout_height="100dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:layout_margin="5dp"
+    android:padding="5dp"
+    android:background="@color/todo_list_item_background"
+    >
 
     <TextView
         android:id="@+id/taskName"

@@ -91,8 +91,8 @@ public class TodoFragment extends Fragment {
 
                 // Get element from your dataset at this position and replace the
                 // contents of the view with that element
-                viewHolder.getTaskNameView().setText(localDataSet.get(position).toString());
-                viewHolder.getTaskDueDateView().setText(localDataSet.get(position).toString());
+                viewHolder.getTaskNameView().setText(localDataSet.get(position).getName());
+                viewHolder.getTaskDueDateView().setText(localDataSet.get(position).getDescription());
             }
 
             // Return the size of your dataset (invoked by the layout manager)
@@ -108,8 +108,7 @@ public class TodoFragment extends Fragment {
 
 
         RecyclerView todoRecyclerView = root.findViewById(R.id.todo_recycler_view);
-        ArrayList<Task> taskArrayList = new ArrayList<>();
-        CustomAdapter taskArrayListAdapter = new CustomAdapter(taskArrayList);
+        CustomAdapter taskArrayListAdapter = new CustomAdapter(Task.getTaskList());
         todoRecyclerView.setAdapter(taskArrayListAdapter);
         todoRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
@@ -117,8 +116,8 @@ public class TodoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 System.out.println("hello");
-                taskArrayList.add(new Task("task"));
-                todoRecyclerView.setAdapter(new CustomAdapter(taskArrayList));
+                Task T = new Task("taskName", "description");
+                todoRecyclerView.setAdapter(new CustomAdapter(Task.getTaskList()));
             }
         });
 
