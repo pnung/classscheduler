@@ -80,7 +80,7 @@ public class TodoFragment extends Fragment {
             public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
                 // Create a new view, which defines the UI of the list item
                 View view = LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.text_row_item, viewGroup, false);
+                        .inflate(R.layout.card_view, viewGroup, false);
 
                 return new ViewHolder(view);
             }
@@ -91,8 +91,8 @@ public class TodoFragment extends Fragment {
 
                 // Get element from your dataset at this position and replace the
                 // contents of the view with that element
-                viewHolder.getTaskNameView().setText(localDataSet.get(position).toString());
-                viewHolder.getTaskDueDateView().setText(localDataSet.get(position).toString());
+                /*viewHolder.getTaskNameView().setText(localDataSet.get(position).toString());
+                viewHolder.getTaskDueDateView().setText(localDataSet.get(position).toString());*/
             }
 
             // Return the size of your dataset (invoked by the layout manager)
