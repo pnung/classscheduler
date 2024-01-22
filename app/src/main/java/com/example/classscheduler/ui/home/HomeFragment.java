@@ -59,7 +59,6 @@ public class HomeFragment extends Fragment {
                         courseViewModel.addCourse(newCourse);
                     })
                     .setNegativeButton("Cancel", (dialog, id) -> {
-                        // User cancelled the dialog
                     });
 
             AlertDialog dialog = builder.create();
