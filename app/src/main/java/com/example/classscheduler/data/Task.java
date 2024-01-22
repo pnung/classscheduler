@@ -6,14 +6,10 @@ public class Task {
     private String name;
     private String description;
 
-    private static ArrayList<Task> taskList = new ArrayList<>();
-
     public Task(String name, String description) {
         System.out.println("making Task");
         this.name = name;
         this.description = description;
-
-        taskList.add(this);
     }
 
     public Task(String name) {
@@ -37,10 +33,6 @@ public class Task {
     }
     public void setDescription(String newDescription) {
         description = newDescription;
-    }
-
-    public static ArrayList<Task> getTaskList() {
-        return taskList;
     }
 
 }
