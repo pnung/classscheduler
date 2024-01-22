@@ -26,8 +26,12 @@ import com.example.classscheduler.ui.todo.TodoViewModel;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
+<<<<<<< HEAD
 
     private FragmentTodoBinding binding;
+=======
+    private FragmentHomeBinding binding;
+>>>>>>> main
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +41,11 @@ public class HomeFragment extends Fragment {
         binding = FragmentTodoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+<<<<<<< HEAD
         Button todoTaskAddButton = root.findViewById(R.id.todo_task_add_button);
+=======
+        Button homeAddCourseButton = root.findViewById(R.id.home_add_course_button);
+>>>>>>> main
 
         // recycler view stuff
 
@@ -64,6 +72,10 @@ public class HomeFragment extends Fragment {
                 public TextView getTaskNameView() {
                     return taskName;
                 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
                 public TextView getTaskDueDateView() {
                     return taskDueDate;
                 }
@@ -111,17 +123,30 @@ public class HomeFragment extends Fragment {
         }
 
 
+<<<<<<< HEAD
         RecyclerView todoRecyclerView = root.findViewById(R.id.todo_recycler_view);
         CustomAdapter taskArrayListAdapter = new CustomAdapter(Task.getTaskList());
         todoRecyclerView.setAdapter(taskArrayListAdapter);
         todoRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         todoTaskAddButton.setOnClickListener(new View.OnClickListener() {
+=======
+        RecyclerView homeRecyclerView = root.findViewById(R.id.home_recycler_view);
+        CustomAdapter taskArrayListAdapter = new CustomAdapter(Task.getTaskList());
+        homeRecyclerView.setAdapter(taskArrayListAdapter);
+        homeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+
+        homeAddCourseButton.setOnClickListener(new View.OnClickListener() {
+>>>>>>> main
             @Override
             public void onClick(View v) {
                 System.out.println("hello");
                 Task T = new Task("taskName", "description");
+<<<<<<< HEAD
                 todoRecyclerView.setAdapter(new CustomAdapter(Task.getTaskList()));
+=======
+                homeRecyclerView.setAdapter(new CustomAdapter(Task.getTaskList()));
+>>>>>>> main
             }
         });
 
