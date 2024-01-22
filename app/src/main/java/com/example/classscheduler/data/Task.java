@@ -24,9 +24,15 @@ public class Task {
     public String getName() {
         return name;
     }
+    public String getDescription() {
+        return description;
+    }
 
     public void setName(String newName) {
         name = newName;
+    }
+    public void setDescription(String newDescription) {
+        description = newDescription;
     }
 
 }
