@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.classscheduler.R;
-import com.example.classscheduler.ui.home.CourseViewModel;
 import com.example.classscheduler.data.Course;
 import java.util.ArrayList;
 
@@ -49,15 +48,14 @@ public class HomeFragment extends Fragment {
                     .setTitle("Add New Course")
                     .setPositiveButton("Add", (dialog, id) -> {
                         EditText editCourseName = dialogView.findViewById(R.id.edit_course_name);
-                        EditText editCourseTime = dialogView.findViewById(R.id.edit_course_time);
+                        EditText editCourseDays = dialogView.findViewById(R.id.edit_course_days);
                         EditText editInstructorName = dialogView.findViewById(R.id.edit_instructor_name);
                         EditText editStartTime = dialogView.findViewById(R.id.edit_start_time);
                         EditText editEndTime = dialogView.findViewById(R.id.edit_end_time);
 
                         Course newCourse = new Course(
-                                editCourseName.getText().toString(),
-                                editCourseTime.getText().toString() + " " + editStartTime.getText().toString() + " - " + editEndTime.getText().toString(),
-                                editInstructorName.getText().toString());
+                                editCourseName.getText().toString(), editInstructorName.getText().toString(),
+                                editCourseDays.getText().toString() + " " + editStartTime.getText().toString() + " - " + editEndTime.getText().toString());
                         courseViewModel.addCourse(newCourse);
                     })
                     .setNegativeButton("Cancel", (dialog, id) -> {
