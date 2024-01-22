@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,10 +41,31 @@ public class HomeFragment extends Fragment {
 
         Button homeAddCourseButton = root.findViewById(R.id.home_add_course_button);
         homeAddCourseButton.setOnClickListener(v -> {
-            // Create a new course
-            Course newCourse = new Course("Course Name", "Course Time", "Instructor Name");
-            // Add course to ViewModel
-            courseViewModel.addCourse(newCourse);
+            LayoutInflater inflater1 = requireActivity().getLayoutInflater();
+            View dialogView = inflater1.inflate(R.layout.dialog_add_course, null);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setView(dialogView)
+                    .setTitle("Add New Course")
+                    .setPositiveButton("Add", (dialog, id) -> {
+                        EditText editCourseName = dialogView.findViewById(R.id.edit_course_name);
+                        EditText editCourseTime = dialogView.findViewById(R.id.edit_course_time);
+                        EditText editInstructorName = dialogView.findViewById(R.id.edit_instructor_name);
+                        EditText editStartTime = dialogView.findViewById(R.id.edit_start_time);
+                        EditText editEndTime = dialogView.findViewById(R.id.edit_end_time);
+
+                        Course newCourse = new Course(
+                                editCourseName.getText().toString(),
+                                editCourseTime.getText().toString() + " " + editStartTime.getText().toString() + " - " + editEndTime.getText().toString(),
+                                editInstructorName.getText().toString());
+                        courseViewModel.addCourse(newCourse);
+                    })
+                    .setNegativeButton("Cancel", (dialog, id) -> {
+                        // User cancelled the dialog
+                    });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
         return root;
