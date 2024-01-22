@@ -12,10 +12,10 @@
         android:hint="Course Name" />
 
     <EditText
-        android:id="@+id/edit_course_time"
+        android:id="@+id/edit_course_days"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Course Time" />
+        android:hint="Course Days" />
 
     <EditText
         android:id="@+id/edit_instructor_name"
