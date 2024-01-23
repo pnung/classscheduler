@@ -4,22 +4,33 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.classscheduler.R;
+import com.example.classscheduler.data.DateAndTime;
 import com.example.classscheduler.data.Task;
 import com.example.classscheduler.ui.todo.TaskViewModel;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class TodoFragment extends Fragment {
 
     private TaskViewModel taskViewModel;
     private CustomAdapter taskArrayListAdapter;
+
+    Comparator<Task> chronologicalSorter = new Task.ChronologicalSort();
+    Comparator<Task> alphabeticalSorter = new Task.AlphabeticalSort();
+    Comparator<Task> currentSorter = chronologicalSorter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -39,9 +50,35 @@ public class TodoFragment extends Fragment {
 
         Button todoTaskAddButton = root.findViewById(R.id.todo_task_add_button);
         todoTaskAddButton.setOnClickListener(v -> {
-            Task newTask = new Task("Task Name", "Task Description");
+            System.out.println("a");
+            Task newTask = new Task("" + taskArrayListAdapter.getItemCount(), "Task Description", new DateAndTime(10, 30 - taskArrayListAdapter.getItemCount()));
+            System.out.println("b");
             // Add task to ViewModel
             taskViewModel.addTask(newTask);
+            Collections.sort(taskArrayListAdapter.getLocalDataSet(), currentSorter);
+        });
+
+
+        AppCompatSpinner sortOptionsDropdown = root.findViewById(R.id.sort_options_dropdown);
+        sortOptionsDropdown.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, new String[]{"Time", "Name", "Type", "Class"}));
+
+        sortOptionsDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Comparator<Task> comparator = null;
+                String selectedSort = (String) sortOptionsDropdown.getSelectedItem();
+                if (selectedSort.equals("Time")) {
+                    currentSorter = chronologicalSorter;
+                } else if (selectedSort.equals("Name")) {
+                    currentSorter = alphabeticalSorter;
+                }
+                Collections.sort(taskArrayListAdapter.getLocalDataSet(), currentSorter);
+                taskArrayListAdapter.updateData(taskArrayListAdapter.getLocalDataSet());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         return root;
@@ -67,6 +104,8 @@ public class TodoFragment extends Fragment {
             Task task = localDataSet.get(position);
             viewHolder.getTaskNameView().setText(task.getName());
             viewHolder.getTaskDescriptionView().setText(task.getDescription());
+            viewHolder.getTaskDueDateView().setText(task.getCardTime());
+            viewHolder.getTaskTypeView().setText(task.getType());
         }
 
         @Override
@@ -79,14 +118,22 @@ public class TodoFragment extends Fragment {
             notifyDataSetChanged();
         }
 
+        public ArrayList<Task> getLocalDataSet() {
+            return localDataSet;
+        }
+
         class ViewHolder extends RecyclerView.ViewHolder {
             private final TextView taskNameView;
             private final TextView taskDescriptionView;
+            private final TextView taskDueDateView;
+            private final TextView taskTypeView;
 
             ViewHolder(View view) {
                 super(view);
                 taskNameView = view.findViewById(R.id.taskName);
-                taskDescriptionView = view.findViewById(R.id.taskDueDate);
+                taskDescriptionView = view.findViewById(R.id.taskDescription);
+                taskDueDateView = view.findViewById(R.id.taskDueDate);
+                taskTypeView = view.findViewById(R.id.taskType);
             }
 
             TextView getTaskNameView() {
@@ -95,6 +142,14 @@ public class TodoFragment extends Fragment {
 
             TextView getTaskDescriptionView() {
                 return taskDescriptionView;
+            }
+
+            public TextView getTaskDueDateView() {
+                return taskDueDateView;
+            }
+
+            public TextView getTaskTypeView() {
+                return taskTypeView;
             }
         }
     }
