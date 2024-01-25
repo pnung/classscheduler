@@ -28,9 +28,6 @@ public class TodoFragment extends Fragment {
     private TaskViewModel taskViewModel;
     private CustomAdapter taskArrayListAdapter;
 
-    Comparator<Task> chronologicalSorter = new Task.ChronologicalSort();
-    Comparator<Task> alphabeticalSorter = new Task.AlphabeticalSort();
-    Comparator<Task> currentSorter = chronologicalSorter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,14 +46,7 @@ public class TodoFragment extends Fragment {
         });
 
         Button todoTaskAddButton = root.findViewById(R.id.todo_task_add_button);
-        todoTaskAddButton.setOnClickListener(v -> {
-            System.out.println("a");
-            Task newTask = new Task("" + taskArrayListAdapter.getItemCount(), "Task Description", new DateAndTime(10, 30 - taskArrayListAdapter.getItemCount()));
-            System.out.println("b");
-            // Add task to ViewModel
-            taskViewModel.addTask(newTask);
-            Collections.sort(taskArrayListAdapter.getLocalDataSet(), currentSorter);
-        });
+        todoTaskAddButton.setOnClickListener(new AddTaskButtonOnClickListener(requireActivity(), getContext(), taskViewModel));
 
 
         AppCompatSpinner sortOptionsDropdown = root.findViewById(R.id.sort_options_dropdown);
@@ -65,15 +55,14 @@ public class TodoFragment extends Fragment {
         sortOptionsDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Comparator<Task> comparator = null;
                 String selectedSort = (String) sortOptionsDropdown.getSelectedItem();
                 if (selectedSort.equals("Time")) {
-                    currentSorter = chronologicalSorter;
+                    taskViewModel.setSorter("Time");
                 } else if (selectedSort.equals("Name")) {
-                    currentSorter = alphabeticalSorter;
+                    taskViewModel.setSorter("Name");
                 }
-                Collections.sort(taskArrayListAdapter.getLocalDataSet(), currentSorter);
-                taskArrayListAdapter.updateData(taskArrayListAdapter.getLocalDataSet());
+                //Collections.sort(taskArrayListAdapter.getLocalDataSet(), currentSorter);
+                //taskArrayListAdapter.updateData(taskArrayListAdapter.getLocalDataSet());
             }
 
             @Override
@@ -81,13 +70,15 @@ public class TodoFragment extends Fragment {
             }
         });
 
+
         return root;
     }
+
 
     private class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
         private ArrayList<Task> localDataSet;
 
-        CustomAdapter(ArrayList<Task> dataSet) {
+        public CustomAdapter(ArrayList<Task> dataSet) {
             localDataSet = dataSet;
         }
 

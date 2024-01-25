@@ -15,7 +15,7 @@ public class Task {
     }
 
     public Task(String name) {
-        this(name, "", null);
+        this(name, "", new DateAndTime());
     }
 
     @Override
@@ -60,6 +60,7 @@ public class Task {
 
         @Override
         public int compare(Task o1, Task o2) {
+            System.out.println("chrono sort");
             System.out.println(o1.primaryDateAndTime.getDay());
             System.out.println(o2.primaryDateAndTime.getDay());
             if (o1.primaryDateAndTime.getYear() != o2.primaryDateAndTime.getYear()) {
@@ -75,7 +76,7 @@ public class Task {
                     return 1;
                 }
             } else if (o1.primaryDateAndTime.getHour() != o2.primaryDateAndTime.getHour()) {
-                return o1.primaryDateAndTime.getHour() - o2.primaryDateAndTime.getHour();
+                return (o1.primaryDateAndTime.getHour() % 12)- (o2.primaryDateAndTime.getHour() % 12);
             } else {
                 return o1.primaryDateAndTime.getMinute() - o2.primaryDateAndTime.getMinute();
             }
