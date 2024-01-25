@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -49,7 +50,7 @@ public class EditTaskOnClickListener implements View.OnClickListener {
         }
 
         LayoutInflater inflater1 = requiredActivity.getLayoutInflater();
-        View dialogView = inflater1.inflate(R.layout.dialog_add_task, null);
+        View dialogView = inflater1.inflate(R.layout.dialog_edit_task, null);
 
         Task currentTask = taskViewModel.getTasks().getValue().get(position);
 
@@ -146,5 +147,11 @@ public class EditTaskOnClickListener implements View.OnClickListener {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+
+        Button deleteTaskButton = dialogView.findViewById(R.id.delete_task);
+        deleteTaskButton.setOnClickListener((v1) -> {
+            taskViewModel.remove(position);
+            dialog.dismiss();
+        });
     }
 }
