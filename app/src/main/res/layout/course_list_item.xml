@@ -1,5 +1,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
     android:layout_height="100dp"
     android:layout_margin="5dp"
@@ -12,7 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Course Name"
-        android:textSize="16sp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,16 +23,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Course Time"
-        android:textSize="14sp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseName" />
+        app:layout_constraintTop_toBottomOf="@+id/courseName"
+    />
 
     <TextView
         android:id="@+id/instructorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Instructor Name"
-        android:textSize="14sp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseTime" />
+        app:layout_constraintTop_toBottomOf="@+id/courseTime"
+    />
+
+    <Spinner
+        android:id="@+id/course_options_spinner"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+    />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
