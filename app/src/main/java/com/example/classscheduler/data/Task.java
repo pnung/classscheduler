@@ -45,7 +45,9 @@ public class Task {
         description = newDescription;
     }
 
-
+    public DateAndTime getPrimaryDateAndTime() {
+        return primaryDateAndTime;
+    }
 
     public static class AlphabeticalSort implements Comparator<Task> {
 

@@ -33,6 +33,15 @@ public class TaskViewModel extends ViewModel {
         sort();
     }
 
+    public void set(int index, Task task) {
+        ArrayList<Task> currentTasks = tasks.getValue();
+        if (currentTasks != null) {
+            currentTasks.set(index, task);
+            tasks.setValue(currentTasks);
+        }
+        sort();
+    }
+
     public void setSorter(String sorter) {
         if (sorter.equals("Time")) {
             currentSorter = chronologicalSorter;

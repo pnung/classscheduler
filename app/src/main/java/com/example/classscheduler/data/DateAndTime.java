@@ -97,6 +97,24 @@ public class DateAndTime {
         }
     }
 
+    public static String getMonthStringFromNumber(int n) {
+        switch(n) {
+            case 1: return "Jan";
+            case 2: return "Feb";
+            case 3: return "Mar";
+            case 4: return "Apr";
+            case 5: return "May";
+            case 6: return "Jun";
+            case 7: return "Jul";
+            case 8: return "Aug";
+            case 9: return "Sep";
+            case 10: return "Oct";
+            case 11: return "Nov";
+            case 12: return "Dec";
+            default: return "";
+        }
+    }
+
     public static int getNumberOfDays(String m) {
         switch(m) {
             case "Feb": return 28;
@@ -114,7 +132,7 @@ public class DateAndTime {
     }
 
     public String getCardTime() {
-        return String.format("%d/%d at %d:%s%s", month, day, hour, minute >= 10 ? minute : "0" + minute, isPM() ? "PM" : "AM");
+        return String.format("%s. %d at %d:%s%s", getMonthStringFromNumber(month), day, hour, minute >= 10 ? minute : "0" + minute, isPM() ? "PM" : "AM");
     }
 
 }

@@ -97,6 +97,7 @@ public class TodoFragment extends Fragment {
             viewHolder.getTaskDescriptionView().setText(task.getDescription());
             viewHolder.getTaskDueDateView().setText(task.getCardTime());
             viewHolder.getTaskTypeView().setText(task.getType());
+            viewHolder.addEditOnClickListener(position);
         }
 
         @Override
@@ -118,13 +119,19 @@ public class TodoFragment extends Fragment {
             private final TextView taskDescriptionView;
             private final TextView taskDueDateView;
             private final TextView taskTypeView;
+            private View view;
 
             ViewHolder(View view) {
                 super(view);
+                this.view = view;
                 taskNameView = view.findViewById(R.id.taskName);
                 taskDescriptionView = view.findViewById(R.id.taskDescription);
                 taskDueDateView = view.findViewById(R.id.taskDueDate);
                 taskTypeView = view.findViewById(R.id.taskType);
+            }
+
+            void addEditOnClickListener(int position) {
+                view.setOnClickListener(new EditTaskOnClickListener(requireActivity(), getContext(), taskViewModel, position));
             }
 
             TextView getTaskNameView() {
