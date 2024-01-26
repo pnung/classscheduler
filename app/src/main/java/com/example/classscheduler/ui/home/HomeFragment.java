@@ -240,19 +240,21 @@ public class HomeFragment extends Fragment {
                             String selectedOption = adapter.getItem(position);
                             if ("Edit".equals(selectedOption)) {
                                 showEditDialog(localDataSet.get(getAdapterPosition()));
+                                courseOptionsSpinner.setSelection(0);
                             } else if ("Remove".equals(selectedOption)) {
                                 showDeleteDialog(localDataSet.get(getAdapterPosition()), getAdapterPosition());
+                                courseOptionsSpinner.setSelection(0);
                             }
-                            courseOptionsSpinner.setSelection(0); // Reset to default after selection
+                            userSelected = false;
+                        } else {
+                            userSelected = true;
                         }
-                        userSelected = true;
                     }
 
                     @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        userSelected = false;
-                    }
+                    public void onNothingSelected(AdapterView<?> parent) {}
                 });
+
             }
 
             TextView getCourseNameView() {
