@@ -20,7 +20,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_recycler_view"
         android:layout_width="wrap_content"
-        app:layout_constraintHorizontal_bias="0.5"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,8 +30,8 @@
 
     <Button
         android:id="@+id/home_add_course_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="108dp"
+        android:layout_height="53dp"
         android:layout_marginBottom="88dp"
         android:text="Add Course"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -19,6 +19,14 @@ public class Course extends Task {
 
     }
 
+    public String getCourseDays() {
+        return courseDays;
+    }
+
+    public void setCourseDays(String newCourseDays) {
+        this.courseDays = newCourseDays;
+    }
+
     public String getCourseTime() {
         return courseTime;
     }
