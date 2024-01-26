@@ -92,8 +92,13 @@ public class HomeFragment extends Fragment {
                     String startTime = editStartTime.getText().toString();
                     String endTime = editEndTime.getText().toString();
 
-                    // Create a new Course object
-                    Course newCourse = new Course(courseName, instructorName, courseDays + " " + startTime + " - " + endTime);
+                    // Create a new Course object with the correct parameters
+                    Course newCourse = new Course(
+                            courseName,
+                            instructorName,
+                            courseDays,
+                            startTime + " - " + endTime);
+
                     courseViewModel.addCourse(newCourse);
                 })
                 .setNegativeButton("Cancel", (dialog, id) -> {});
@@ -113,39 +118,39 @@ public class HomeFragment extends Fragment {
 
         editCourseName.setText(course.getName());
         editInstructorName.setText(course.getInstructorName());
+        editCourseDays.setText(course.getCourseDays());
 
-        String[] courseTimeParts = course.getCourseTime().split(" ", 3);
-        if (courseTimeParts.length == 3) {
-            String days = courseTimeParts[0];
-            String[] timeParts = courseTimeParts[2].split(" - ");
-            System.out.println("Days: " + days);
+        String[] times = course.getCourseTime().split(" - ");
 
-            for (int i = 0; i < timeParts.length; i++) {
-                System.out.println(timeParts[i]);
-            }
-
-            if (timeParts.length == 2) {
-                editStartTime.setText(timeParts[0]);
-                editEndTime.setText(timeParts[1]);
-            }
+        for (String time : times) {
+            System.out.println("Time" + time);
+        }
+        if (times.length == 2) {
+            editStartTime.setText(times[0]);
+            editEndTime.setText(times[1]);
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setView(dialogView)
                 .setPositiveButton("Save", (dialog, id) -> {
-                    String courseName = editCourseName.getText().toString();
-                    String courseDays = editCourseDays.getText().toString();
-                    String instructorName = editInstructorName.getText().toString();
+                    // Extract the edited values
+                    String newName = editCourseName.getText().toString();
+                    String newInstructorName = editInstructorName.getText().toString();
+                    String newCourseDays = editCourseDays.getText().toString();
                     String newStartTime = editStartTime.getText().toString();
                     String newEndTime = editEndTime.getText().toString();
 
-                    course.setName(courseName);
-                    course.setInstructorName(instructorName);
-                    course.setCourseDays(courseDays);
+                    // Update the course object with the new values
+                    course.setName(newName);
+                    course.setInstructorName(newInstructorName);
+                    course.setCourseDays(newCourseDays);
                     course.setCourseTime(newStartTime + " - " + newEndTime);
+
+                    // Update the course in the ViewModel
                     courseViewModel.updateCourse(course);
                 })
-                .setNegativeButton("Cancel", (dialog, id) -> {});
+                .setNegativeButton("Cancel", null);
+
         builder.create().show();
     }
 
@@ -157,7 +162,6 @@ public class HomeFragment extends Fragment {
                 .create()
                 .show();
     }
-
 
     private class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
         private ArrayList<Course> localDataSet;
@@ -216,6 +220,7 @@ public class HomeFragment extends Fragment {
             private final TextView courseTimeView;
             private final TextView instructorNameView;
             private final Spinner courseOptionsSpinner;
+            private boolean userSelected = false;
 
             ViewHolder(View view) {
                 super(view);
@@ -223,6 +228,31 @@ public class HomeFragment extends Fragment {
                 courseTimeView = view.findViewById(R.id.courseTime);
                 instructorNameView = view.findViewById(R.id.instructorName);
                 courseOptionsSpinner = view.findViewById(R.id.course_options_spinner);
+
+                String[] items = new String[]{"Options", "Edit", "Remove"};
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+                courseOptionsSpinner.setAdapter(adapter);
+
+                courseOptionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (userSelected) {
+                            String selectedOption = adapter.getItem(position);
+                            if ("Edit".equals(selectedOption)) {
+                                showEditDialog(localDataSet.get(getAdapterPosition()));
+                            } else if ("Remove".equals(selectedOption)) {
+                                showDeleteDialog(localDataSet.get(getAdapterPosition()), getAdapterPosition());
+                            }
+                            courseOptionsSpinner.setSelection(0); // Reset to default after selection
+                        }
+                        userSelected = true;
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        userSelected = false;
+                    }
+                });
             }
 
             TextView getCourseNameView() {
