@@ -2,6 +2,9 @@ package com.example.classscheduler.ui.todo;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.classscheduler.data.Assignment;
+import com.example.classscheduler.data.Exam;
 import com.example.classscheduler.data.Task;
 import java.util.ArrayList;
 

@@ -43,22 +43,27 @@ public class TodoFragment extends Fragment {
 
         taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
-        taskArrayListAdapter = new CustomAdapter(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        taskArrayListAdapter = new CustomAdapter(new ArrayList<>()/*, new ArrayList<>(), new ArrayList<>()*/);
         RecyclerView todoRecyclerView = root.findViewById(R.id.todo_recycler_view);
         todoRecyclerView.setAdapter(taskArrayListAdapter);
         todoRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         taskViewModel.getTasks().observe(getViewLifecycleOwner(), updatedList -> {
-            taskArrayListAdapter.updateData(updatedList, updatedList, updatedList);
+            taskArrayListAdapter.updateData(updatedList);
         });
 
         Button todoTaskAddButton = root.findViewById(R.id.todo_task_add_button);
         todoTaskAddButton.setOnClickListener(v -> {
-            System.out.println("a");
-            Task newTask = new Task("" + taskArrayListAdapter.getItemCount(), "Task Description", new DateAndTime(10, 30 - taskArrayListAdapter.getItemCount()));
-            System.out.println("b");
-            // Add task to ViewModel
-            taskViewModel.addTask(newTask);
+            TaskType taskType = getType();
+            String type = taskType.getType();
+            if (type.equals("Assignment")) {
+                Task newAssignment = new Assignment("CALC HW", "MATH 1551");
+                taskViewModel.addTask(newAssignment);
+            } else {
+                Task newTask = new Task("" + taskArrayListAdapter.getItemCount(), "Task Description", new DateAndTime(10, 30 - taskArrayListAdapter.getItemCount()));
+                // Add task to ViewModel
+                taskViewModel.addTask(newTask);
+            }
             Collections.sort(taskArrayListAdapter.getLocalDataSet(), currentSorter);
         });
 
@@ -109,16 +114,10 @@ public class TodoFragment extends Fragment {
     public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
         private ArrayList<Task> localDataSet;
 
-        private ArrayList<Assignment> localDataSet_Assignments;
-
-        private ArrayList<Exam> localDataSet_Exams;
-
         private TaskType taskType = getType();
 
-        CustomAdapter(ArrayList<Task> dataSet, ArrayList<Assignment> dataSet2, ArrayList<Exam> dataSet3) {
+        CustomAdapter(ArrayList<Task> dataSet) {
             localDataSet = dataSet;
-            localDataSet_Assignments = dataSet2;
-            localDataSet_Exams = dataSet3;
         }
 
 
@@ -145,17 +144,14 @@ public class TodoFragment extends Fragment {
             TaskType taskType = getType();
             String type = taskType.getType();
             if (type.equals("Assignment")) {
-                Assignment assignment = localDataSet_Assignments.get(position);
-                Log.d("myTag", "Assignment has been text-set in onBind");
+                Assignment assignment = (Assignment) localDataSet.get(position);
                 viewHolder.getAssignmentCourseName().setText(assignment.getCourseName());
                 viewHolder.getTaskNameView().setText(assignment.getName());
-                //Log.d("myTag", "Assignment has been text-set in onBind");
             } else {
                 Task task = localDataSet.get(position);
                 viewHolder.getTaskNameView().setText(task.getName());
                 viewHolder.getTaskDescriptionView().setText(task.getDescription());
                 viewHolder.getTaskDueDateView().setText(task.getCardTime());
-                Log.d("myTag", "Task has been text-set in onBind");
             }
         }
 
@@ -164,10 +160,8 @@ public class TodoFragment extends Fragment {
             return localDataSet.size();
         }
 
-        public void updateData(ArrayList<Task> newData, ArrayList<Assignment> newData2, ArrayList<Exam> newData3) {
+        public void updateData(ArrayList<Task> newData) {
             localDataSet = newData;
-            localDataSet_Assignments = newData2;
-            localDataSet_Exams = newData3;
 
             notifyDataSetChanged();
         }

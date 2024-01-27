@@ -15,7 +15,7 @@ public class Task {
     }
 
     public Task(String name) {
-        this(name, "", null);
+        this(name, "", new DateAndTime());
     }
 
     @Override
