@@ -8,4 +8,11 @@ public class Assignment extends Task {
         this.courseName = courseName;
     }
 
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String newCourseName) {
+        courseName = newCourseName;
+    }
 }
