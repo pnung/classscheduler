@@ -56,19 +56,22 @@ public class TodoFragment extends Fragment {
         todoTaskAddButton.setOnClickListener(v -> {
             TaskType taskType = getType();
             String type = taskType.getType();
-            if (type.equals("Assignment")) {
-                Task newAssignment = new Assignment("CALC HW", "MATH 1551", "1/27/24");
-                taskViewModel.addTask(newAssignment);
-            } else if (type.equals("Exam")) {
-                Task newExam = new Exam("1554", "1/31/24", "6:30pm", "8:50pm");
-                taskViewModel.addTask(newExam);
-            } else {
-                Task newTask = new Task("" + taskArrayListAdapter.getItemCount(), "Task Description", new DateAndTime(10, 30 - taskArrayListAdapter.getItemCount()));
-                taskViewModel.addTask(newTask);
-            }
-            Collections.sort(taskArrayListAdapter.getLocalDataSet(), currentSorter);
-        });
+            Task newTask;
 
+            if (type.equals("Assignment")) {
+                newTask = new Assignment("CALC HW", "MATH 1551", "1/27/24");
+            } else if (type.equals("Exam")) {
+                newTask = new Exam("1554", "1/31/24", "6:30pm", "8:50pm");
+            } else {
+                newTask = new Task("" + taskArrayListAdapter.getItemCount(), "Task Description", new DateAndTime(10, 30 - taskArrayListAdapter.getItemCount()));
+            }
+
+            ArrayList<Task> updatedList = new ArrayList<>(taskArrayListAdapter.getLocalDataSet());
+            updatedList.add(newTask);
+            Collections.sort(updatedList, currentSorter);
+            taskArrayListAdapter.updateData(updatedList);
+            taskViewModel.addTask(newTask);
+        });
 
         AppCompatSpinner sortOptionsDropdown = root.findViewById(R.id.sort_options_dropdown);
         sortOptionsDropdown.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, new String[]{"Time", "Name", "Type", "Class"}));
@@ -113,6 +116,8 @@ public class TodoFragment extends Fragment {
         return type;
     }
 
+
+
     public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
         private ArrayList<Task> localDataSet;
 
@@ -129,51 +134,58 @@ public class TodoFragment extends Fragment {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-            TaskType taskType = getType();
-            String type = taskType.getType();
-            int layout = R.layout.todo_list_item;
-            if (type.equals("Assignment")) {
-                layout = R.layout.assignment_item;
-            } else if (type.equals("Exam")) {
-                layout= R.layout.exam_item;
-            }
             View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(layout, viewGroup, false);
+                    .inflate(viewType, viewGroup, false);
             return new ViewHolder(view);
         }
+
 
         //Setting the text
         @Override
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-            TaskType taskType = getType();
-            String type = taskType.getType();
-            if (type.equals("Assignment")) {
-                Assignment assignment = (Assignment) localDataSet.get(position);
+            Task task = localDataSet.get(position);
+
+            if (task instanceof Assignment) {
+                Assignment assignment = (Assignment) task;
                 viewHolder.getAssignmentNameView().setText(assignment.getName());
                 viewHolder.getAssignmentCourseNameView().setText(assignment.getCourseName());
                 viewHolder.getAssignmentDueDateView().setText(assignment.getDueDate());
-            } else if (type.equals("Exam")) {
-                Exam exam = (Exam) localDataSet.get(position);
+            } else if (task instanceof Exam) {
+                Exam exam = (Exam) task;
                 viewHolder.getExamNameView().setText(exam.getName());
                 viewHolder.getExamDateView().setText(exam.getExamDate());
                 viewHolder.getExamStartTimeView().setText(exam.getExamStartTime());
                 viewHolder.getExamEndTimeView().setText(exam.getExamEndTime());
             } else {
-                Task task = localDataSet.get(position);
                 viewHolder.getTaskNameView().setText(task.getName());
                 viewHolder.getTaskDescriptionView().setText(task.getDescription());
                 viewHolder.getTaskDueDateView().setText(task.getCardTime());
+                // Note: You might also want to set the taskTypeView if necessary.
             }
         }
+
 
         @Override
         public int getItemCount() {
             return localDataSet.size();
         }
 
-        public void updateData(ArrayList<Task> newData) {
-            localDataSet = newData;
+        @Override
+        public int getItemViewType(int position) {
+            Task task = localDataSet.get(position);
+            if (task instanceof Assignment) {
+                return R.layout.assignment_item;
+            } else if (task instanceof Exam) {
+                return R.layout.exam_item;
+            } else {
+                return R.layout.todo_list_item;
+            }
+        }
 
+
+        public void updateData(ArrayList<Task> newData) {
+            localDataSet.clear();
+            localDataSet.addAll(newData);
             notifyDataSetChanged();
         }
 
