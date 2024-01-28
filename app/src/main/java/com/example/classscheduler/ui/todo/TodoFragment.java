@@ -1,14 +1,12 @@
 package com.example.classscheduler.ui.todo;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatSpinner;
@@ -21,7 +19,9 @@ import com.example.classscheduler.data.Assignment;
 import com.example.classscheduler.data.DateAndTime;
 import com.example.classscheduler.data.Exam;
 import com.example.classscheduler.data.Task;
-import com.example.classscheduler.ui.todo.TaskViewModel;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -57,11 +57,13 @@ public class TodoFragment extends Fragment {
             TaskType taskType = getType();
             String type = taskType.getType();
             if (type.equals("Assignment")) {
-                Task newAssignment = new Assignment("CALC HW", "MATH 1551");
+                Task newAssignment = new Assignment("CALC HW", "MATH 1551", "1/27/24");
                 taskViewModel.addTask(newAssignment);
+            } else if (type.equals("Exam")) {
+                Task newExam = new Exam("1554", "1/31/24", "6:30pm", "8:50pm");
+                taskViewModel.addTask(newExam);
             } else {
                 Task newTask = new Task("" + taskArrayListAdapter.getItemCount(), "Task Description", new DateAndTime(10, 30 - taskArrayListAdapter.getItemCount()));
-                // Add task to ViewModel
                 taskViewModel.addTask(newTask);
             }
             Collections.sort(taskArrayListAdapter.getLocalDataSet(), currentSorter);
@@ -132,6 +134,8 @@ public class TodoFragment extends Fragment {
             int layout = R.layout.todo_list_item;
             if (type.equals("Assignment")) {
                 layout = R.layout.assignment_item;
+            } else if (type.equals("Exam")) {
+                layout= R.layout.exam_item;
             }
             View view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(layout, viewGroup, false);
@@ -145,8 +149,15 @@ public class TodoFragment extends Fragment {
             String type = taskType.getType();
             if (type.equals("Assignment")) {
                 Assignment assignment = (Assignment) localDataSet.get(position);
-                viewHolder.getAssignmentCourseName().setText(assignment.getCourseName());
-                viewHolder.getTaskNameView().setText(assignment.getName());
+                viewHolder.getAssignmentNameView().setText(assignment.getName());
+                viewHolder.getAssignmentCourseNameView().setText(assignment.getCourseName());
+                viewHolder.getAssignmentDueDateView().setText(assignment.getDueDate());
+            } else if (type.equals("Exam")) {
+                Exam exam = (Exam) localDataSet.get(position);
+                viewHolder.getExamNameView().setText(exam.getName());
+                viewHolder.getExamDateView().setText(exam.getExamDate());
+                viewHolder.getExamStartTimeView().setText(exam.getExamStartTime());
+                viewHolder.getExamEndTimeView().setText(exam.getExamEndTime());
             } else {
                 Task task = localDataSet.get(position);
                 viewHolder.getTaskNameView().setText(task.getName());
@@ -173,24 +184,39 @@ public class TodoFragment extends Fragment {
         class ViewHolder extends RecyclerView.ViewHolder {
             private TaskType taskType = getType();
             private String type = taskType.getType();
-            private final TextView taskNameView;
-            private final TextView taskDescriptionView;
-            private final TextView taskDueDateView;
-            private final TextView taskTypeView;
-            private TextView assignmentCourseName;
+            private TextView taskNameView;
+            private TextView taskDescriptionView;
+            private TextView taskDueDateView;
+            private TextView taskTypeView;
+            private TextView assignmentNameView;
+            private TextView assignmentCourseNameView;
+            private TextView assignmentDueDateView;
+            private TextView examNameView;
+            private TextView examDateView;
+            private TextView examStartTimeView;
+            private TextView examEndTimeView;
+
 
             //initiating the text boxes
             ViewHolder(View view) {
                 super(view);
                 //Task initializations
-                taskNameView = view.findViewById(R.id.taskName);
-                taskDescriptionView = view.findViewById(R.id.taskDescription);
-                taskDueDateView = view.findViewById(R.id.taskDueDate);
-                taskTypeView = view.findViewById(R.id.taskType);
 
                 if (type.equals("Assignment")) {
-                    Log.d("myTag", "Assignment has been initialized");
-                    assignmentCourseName = view.findViewById(R.id.courseName);
+                    assignmentNameView = view.findViewById(R.id.assignmentName);
+                    assignmentCourseNameView = view.findViewById(R.id.courseName);
+                    assignmentDueDateView = view.findViewById(R.id.assignmentDueDate);
+                } else if (type.equals("Exam")) {
+                    examNameView = view.findViewById(R.id.examName);
+                    examDateView = view.findViewById(R.id.examDate);
+                    examStartTimeView = view.findViewById(R.id.examStartTime);
+                    examEndTimeView = view.findViewById(R.id.examEndTime);
+
+                } else {
+                    taskNameView = view.findViewById(R.id.taskName);
+                    taskDescriptionView = view.findViewById(R.id.taskDescription);
+                    taskDueDateView = view.findViewById(R.id.taskDueDate);
+                    taskTypeView = view.findViewById(R.id.taskType);
                 }
             }
 
@@ -210,8 +236,32 @@ public class TodoFragment extends Fragment {
                 return taskTypeView;
             }
 
-            public TextView getAssignmentCourseName() {
-                return assignmentCourseName;
+            public TextView getAssignmentNameView() {
+                return assignmentNameView;
+            }
+
+            public TextView getAssignmentCourseNameView() {
+                return assignmentCourseNameView;
+            }
+
+            public TextView getAssignmentDueDateView() {
+                return assignmentDueDateView;
+            }
+
+            public TextView getExamNameView() {
+                return examNameView;
+            }
+
+            public TextView getExamDateView() {
+                return examDateView;
+            }
+
+            public TextView getExamStartTimeView() {
+                return examStartTimeView;
+            }
+
+            public TextView getExamEndTimeView() {
+                return examEndTimeView;
             }
         }
     }

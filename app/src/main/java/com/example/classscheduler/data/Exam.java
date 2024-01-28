@@ -5,13 +5,12 @@ public class Exam extends Task {
     private String examDate;
     private String examStartTime;
     private String examEndTime;
-    private String examDuration;
 
-    public Exam(String name, String examDate, String examStartTime, String examEndTime, String examDuration) {
+    public Exam(String name, String examDate, String examStartTime, String examEndTime) {
         super(name);
         this.examDate = examDate;
         this.examStartTime = examStartTime;
-        this.examDuration = examDuration;
+        this.examEndTime = examEndTime;
     }
 
     public String getExamDate() {
