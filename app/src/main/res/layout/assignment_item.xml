@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
     android:layout_height="100dp"
+    android:layout_margin="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
+    android:background="#4E97AE"
     android:gravity="center_vertical"
-    android:layout_margin="5dp"
-    android:padding="10dp"
-    android:background="@color/todo_list_item_background"
-    >
+    android:outlineProvider="none"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/taskName"
@@ -39,11 +39,15 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/taskType"
+        android:id="@+id/courseName"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="sans-serif-black"
         android:gravity="right"
-        android:text="Task"
+        android:text="PHYS2211"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

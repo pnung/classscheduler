@@ -1,7 +1,5 @@
 package com.example.classscheduler.ui.todo;
 
-import java.util.Arrays;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +12,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.classscheduler.R;
-import com.example.classscheduler.data.Course;
+import com.example.classscheduler.data.Assignment;
 import com.example.classscheduler.data.DateAndTime;
 import com.example.classscheduler.data.Task;
 
-public class AddTaskButtonOnClickListener implements View.OnClickListener {
+public class AddAssignmentOnClickListener implements View.OnClickListener {
 
     private FragmentActivity requiredActivity;
     private Context context;
@@ -29,9 +27,8 @@ public class AddTaskButtonOnClickListener implements View.OnClickListener {
 
     ArrayAdapter<Integer> dayArrayAdapter;
 
-
-
-    public AddTaskButtonOnClickListener(FragmentActivity requiredActivity, Context context, TaskViewModel taskViewModel) {
+    public AddAssignmentOnClickListener(FragmentActivity requiredActivity, Context context, TaskViewModel taskViewModel) {
+        System.out.println("ADD ASSIGNMENT ON CLICK LISTENER");
         this.requiredActivity = requiredActivity;
         this.context = context;
         this.taskViewModel = taskViewModel;
@@ -46,7 +43,7 @@ public class AddTaskButtonOnClickListener implements View.OnClickListener {
         }
 
         LayoutInflater inflater1 = requiredActivity.getLayoutInflater();
-        View dialogView = inflater1.inflate(R.layout.dialog_add_task, null);
+        View dialogView = inflater1.inflate(R.layout.dialog_add_assignment, null);
 
         Spinner selectMonthSpinner = dialogView.findViewById(R.id.select_month_spinner);
         String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -96,12 +93,13 @@ public class AddTaskButtonOnClickListener implements View.OnClickListener {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(dialogView)
-                .setTitle("Add New Task")
+                .setTitle("Add New Assignment")
                 .setPositiveButton("Add", (dialog, id) -> {
                     EditText setTaskName = dialogView.findViewById(R.id.set_task_name);
                     EditText setTaskDescription = dialogView.findViewById(R.id.set_task_description);
+                    EditText setAssignmentCourse = dialogView.findViewById(R.id.set_assignment_course);
 
-                    Task newTask = new Task(
+                    Task newTask = new Assignment(
                             setTaskName.getText().toString(),
                             setTaskDescription.getText().toString(),
                             new DateAndTime(
@@ -111,7 +109,8 @@ public class AddTaskButtonOnClickListener implements View.OnClickListener {
                                     selectAmOrPmSpinner.getSelectedItem().toString().equals("PM"),
                                     (int) selectHourSpinner.getSelectedItem(),
                                     Integer.parseInt(selectMinuteSpinner.getSelectedItem().toString())
-                            )
+                            ),
+                            setAssignmentCourse.getText().toString()
                     );
                     taskViewModel.addTask(newTask);
                 })
