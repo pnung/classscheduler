@@ -112,16 +112,27 @@ public class TodoFragment extends Fragment {
             localDataSet = dataSet;
         }
 
+        @Override
+        public int getItemViewType(int position) {
+            if (localDataSet.get(position) instanceof Assignment) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-            int layout = R.layout.todo_list_item;
-            if (selectedType.equals("Assignment")) {
+            int layout = -1;
+            if (viewType == 0) {
+                layout = R.layout.todo_list_item;
+            } else {
                 layout = R.layout.assignment_item;
             }
             View view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(layout, viewGroup, false);
-            return new ViewHolder(view);
+            return new ViewHolder(view, selectedType);
         }
 
         //Setting the text
@@ -132,7 +143,8 @@ public class TodoFragment extends Fragment {
             viewHolder.getTaskDescriptionView().setText(task.getDescription());
             viewHolder.getTaskDueDateView().setText(task.getCardTime());
             viewHolder.addEditOnClickListener(position);
-            if (selectedType.equals("Assignment")) {
+            if (task instanceof Assignment) {
+                System.out.println(position);
                 Assignment assignment = (Assignment) task; 
                 viewHolder.getAssignmentCourseName().setText(assignment.getCourseName());
                 viewHolder.getTaskNameView().setText(assignment.getName());
@@ -165,7 +177,7 @@ public class TodoFragment extends Fragment {
             private TextView assignmentCourseName;
 
             //initiating the text boxes
-            ViewHolder(View view) {
+            ViewHolder(View view, String selectedType) {
                 super(view);
                 this.view = view;
                 taskNameView = view.findViewById(R.id.taskName);
