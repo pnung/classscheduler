@@ -135,4 +135,12 @@ public class DateAndTime {
         return String.format("%s. %d at %d:%s%s", getMonthStringFromNumber(month), day, hour, minute >= 10 ? minute : "0" + minute, isPM() ? "PM" : "AM");
     }
 
+    public String getDateString() {
+        return String.format("%s. %d", getMonthStringFromNumber(month), day);
+    }
+
+    public String getTimeString() {
+        return String.format("%d:%s%s", hour, minute >= 10 ? minute : "0" + minute, isPM() ? "PM" : "AM");
+    }
+
 }

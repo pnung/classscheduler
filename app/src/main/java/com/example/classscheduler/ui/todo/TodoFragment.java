@@ -53,6 +53,8 @@ public class TodoFragment extends Fragment {
         Button todoTaskAddButton = root.findViewById(R.id.todo_task_add_button);
         if (selectedType.equals("Assignment")) {
             todoTaskAddButton.setOnClickListener(new AddAssignmentOnClickListener(requireActivity(), getContext(), taskViewModel));
+        } else if (selectedType.equals("Exam")) {
+            todoTaskAddButton.setOnClickListener(new AddExamOnClickListener(requireActivity(), getContext(), taskViewModel));
         } else {
             todoTaskAddButton.setOnClickListener(new AddTaskButtonOnClickListener(requireActivity(), getContext(), taskViewModel));
         }
@@ -91,6 +93,8 @@ public class TodoFragment extends Fragment {
                 todoTaskAddButton.setText("New " + selectedType);
                 if (selectedType.equals("Assignment")) {
                     todoTaskAddButton.setOnClickListener(new AddAssignmentOnClickListener(requireActivity(), getContext(), taskViewModel));
+                } else if (selectedType.equals("Exam")) {
+                    todoTaskAddButton.setOnClickListener(new AddExamOnClickListener(requireActivity(), getContext(), taskViewModel));
                 } else {
                     todoTaskAddButton.setOnClickListener(new AddTaskButtonOnClickListener(requireActivity(), getContext(), taskViewModel));
                 }
@@ -116,6 +120,8 @@ public class TodoFragment extends Fragment {
         public int getItemViewType(int position) {
             if (localDataSet.get(position) instanceof Assignment) {
                 return 1;
+            } else if (localDataSet.get(position) instanceof Exam) {
+                return 2;
             } else {
                 return 0;
             }
@@ -124,32 +130,41 @@ public class TodoFragment extends Fragment {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-            int layout = -1;
+            final int layout;
             if (viewType == 0) {
                 layout = R.layout.todo_list_item;
-            } else {
+            } else if (viewType == 1) {
                 layout = R.layout.assignment_item;
+            } else if (viewType == 2) {
+                layout = R.layout.exam_item;
+            } else {
+                layout = -1;
             }
+
             View view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(layout, viewGroup, false);
-            return new ViewHolder(view, selectedType);
+            return new ViewHolder(view, viewType);
         }
 
         //Setting the text
         @Override
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+            //viewHolder.setIsRecyclable(false);
             Task task = localDataSet.get(position);
             viewHolder.getTaskNameView().setText(task.getName());
-            viewHolder.getTaskDescriptionView().setText(task.getDescription());
             viewHolder.getTaskDueDateView().setText(task.getCardTime());
             viewHolder.addEditOnClickListener(position);
             if (task instanceof Assignment) {
-                System.out.println(position);
-                Assignment assignment = (Assignment) task; 
-                viewHolder.getAssignmentCourseName().setText(assignment.getCourseName());
+                Assignment assignment = (Assignment) task;
+                viewHolder.getTaskDescriptionView().setText(assignment.getDescription());
+                viewHolder.getCourseName().setText(assignment.getCourseName());
                 viewHolder.getTaskNameView().setText(assignment.getName());
+            } else if (task instanceof Exam) {
+                Exam exam = (Exam) task;
+                viewHolder.getExamDate().setText(exam.getPrimaryDateAndTime().getDateString());
+                viewHolder.getExamEndTime().setText(exam.getExamEndTime().getTimeString());
+                viewHolder.getTaskDueDateView().setText(exam.getPrimaryDateAndTime().getTimeString());
             } else {
-                viewHolder.getTaskNameView().setText(task.getName());
                 viewHolder.getTaskDescriptionView().setText(task.getDescription());
                 viewHolder.getTaskDueDateView().setText(task.getCardTime());
             }
@@ -170,28 +185,42 @@ public class TodoFragment extends Fragment {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            private final TextView taskNameView;
-            private final TextView taskDescriptionView;
-            private final TextView taskDueDateView;
+            private TextView taskNameView;
+            private TextView taskDescriptionView;
+            private TextView taskDueDateView;
             private View view;
-            private TextView assignmentCourseName;
+            private TextView courseName;
+            private TextView examEndTime;
+            private TextView examDate;
 
             //initiating the text boxes
-            ViewHolder(View view, String selectedType) {
+            ViewHolder(View view, int viewType) {
                 super(view);
                 this.view = view;
                 taskNameView = view.findViewById(R.id.taskName);
-                taskDescriptionView = view.findViewById(R.id.taskDescription);
                 taskDueDateView = view.findViewById(R.id.taskDueDate);
 
-                if (selectedType.equals("Assignment")) {
-                    assignmentCourseName = view.findViewById(R.id.courseName);
+                if (viewType == 1) {
+                    courseName = view.findViewById(R.id.courseName);
+                    taskDescriptionView = view.findViewById(R.id.taskDescription);
+                }
+
+                if (viewType == 2) {
+                    courseName = view.findViewById(R.id.courseName);
+                    examEndTime = view.findViewById(R.id.examEndTime);
+                    examDate =view.findViewById(R.id.examDate);
+                }
+
+                if (viewType == 0) {
+                    taskDescriptionView = view.findViewById(R.id.taskDescription);
                 }
             }
 
             void addEditOnClickListener(int position) {
-                if (selectedType.equals("Assignment")) {
-
+                if (localDataSet.get(position) instanceof Assignment) {
+                    view.setOnClickListener(new EditAssignmentOnClickListener(requireActivity(), getContext(), taskViewModel, position));
+                } else if (localDataSet.get(position) instanceof Exam) {
+                    view.setOnClickListener(new EditExamOnClickListener(requireActivity(), getContext(), taskViewModel, position));
                 } else {
                     view.setOnClickListener(new EditTaskOnClickListener(requireActivity(), getContext(), taskViewModel, position));
                 }
@@ -209,8 +238,16 @@ public class TodoFragment extends Fragment {
                 return taskDueDateView;
             }
 
-            public TextView getAssignmentCourseName() {
-                return assignmentCourseName;
+            public TextView getCourseName() {
+                return courseName;
+            }
+
+            public TextView getExamEndTime() {
+                return examEndTime;
+            }
+
+            public TextView getExamDate() {
+                return examDate;
             }
         }
     }

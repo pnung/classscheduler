@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -14,24 +15,26 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.classscheduler.R;
 import com.example.classscheduler.data.Assignment;
 import com.example.classscheduler.data.DateAndTime;
-import com.example.classscheduler.data.Task;
 
-public class AddAssignmentOnClickListener implements View.OnClickListener {
+public class EditAssignmentOnClickListener implements View.OnClickListener {
 
     private FragmentActivity requiredActivity;
     private Context context;
     private TaskViewModel taskViewModel;
+    private int position;
 
     Integer[] baseDays = new Integer[31];
     Integer[] days = {0};
 
     ArrayAdapter<Integer> dayArrayAdapter;
 
-    public AddAssignmentOnClickListener(FragmentActivity requiredActivity, Context context, TaskViewModel taskViewModel) {
-        System.out.println("ADD ASSIGNMENT ON CLICK LISTENER");
+
+
+    public EditAssignmentOnClickListener(FragmentActivity requiredActivity, Context context, TaskViewModel taskViewModel, int position) {
         this.requiredActivity = requiredActivity;
         this.context = context;
         this.taskViewModel = taskViewModel;
+        this.position = position;
     }
 
 
@@ -43,7 +46,9 @@ public class AddAssignmentOnClickListener implements View.OnClickListener {
         }
 
         LayoutInflater inflater1 = requiredActivity.getLayoutInflater();
-        View dialogView = inflater1.inflate(R.layout.dialog_add_assignment, null);
+        View dialogView = inflater1.inflate(R.layout.dialog_edit_assignment, null);
+
+        Assignment currentAssignment = (Assignment) taskViewModel.getTasks().getValue().get(position);
 
         Spinner selectMonthSpinner = dialogView.findViewById(R.id.select_month_spinner);
         String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -74,6 +79,27 @@ public class AddAssignmentOnClickListener implements View.OnClickListener {
         ArrayAdapter<String> amOrPmAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, amOrPm);
         selectAmOrPmSpinner.setAdapter(amOrPmAdapter);
 
+        EditText setTaskName = dialogView.findViewById(R.id.set_task_name);
+        setTaskName.setText(currentAssignment.getName());
+
+        EditText setTaskDescription = dialogView.findViewById(R.id.set_task_description);
+        setTaskDescription.setText(currentAssignment.getDescription());
+
+        EditText setAssignmentCourse = dialogView.findViewById(R.id.set_exam_course);
+        setAssignmentCourse.setText(currentAssignment.getCourseName());
+
+        days = new Integer[DateAndTime.getNumberOfDays(DateAndTime.getMonthStringFromNumber(currentAssignment.getPrimaryDateAndTime().getMonth()))];
+        for (int i = 0; i < days.length; i++) days[i] = i+1;
+        dayArrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, days);
+        selectDaySpinner.setAdapter(dayArrayAdapter);
+
+        selectMonthSpinner.setSelection(currentAssignment.getPrimaryDateAndTime().getMonth() - 1);
+        selectDaySpinner.setSelection(currentAssignment.getPrimaryDateAndTime().getDay() - 1);
+        selectYearSpinner.setSelection(currentAssignment.getPrimaryDateAndTime().getYear() - 2024);
+        selectHourSpinner.setSelection(currentAssignment.getPrimaryDateAndTime().getHour() % 12);
+        selectMinuteSpinner.setSelection(currentAssignment.getPrimaryDateAndTime().getMinute() / 5);
+        selectAmOrPmSpinner.setSelection(currentAssignment.getPrimaryDateAndTime().isPM() ? 1 : 0);
+
 
         selectMonthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -83,6 +109,10 @@ public class AddAssignmentOnClickListener implements View.OnClickListener {
                 for (int i = 0; i < days.length; i++) days[i] = i+1;
                 dayArrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, days);
                 selectDaySpinner.setAdapter(dayArrayAdapter);
+                if (currentAssignment.getPrimaryDateAndTime().getDay() >= days.length) {
+                    currentAssignment.getPrimaryDateAndTime().setDay(days.length);
+                }
+                selectDaySpinner.setSelection(currentAssignment.getPrimaryDateAndTime().getDay() - 1);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -93,13 +123,10 @@ public class AddAssignmentOnClickListener implements View.OnClickListener {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(dialogView)
-                .setTitle("Add New Assignment")
+                .setTitle("Edit Assignment")
                 .setPositiveButton("Add", (dialog, id) -> {
-                    EditText setTaskName = dialogView.findViewById(R.id.set_task_name);
-                    EditText setTaskDescription = dialogView.findViewById(R.id.set_task_description);
-                    EditText setAssignmentCourse = dialogView.findViewById(R.id.set_exam_course);
 
-                    Task newTask = new Assignment(
+                    Assignment newAssignment = new Assignment(
                             setTaskName.getText().toString(),
                             setTaskDescription.getText().toString(),
                             new DateAndTime(
@@ -112,12 +139,19 @@ public class AddAssignmentOnClickListener implements View.OnClickListener {
                             ),
                             setAssignmentCourse.getText().toString()
                     );
-                    taskViewModel.addTask(newTask);
+                    taskViewModel.set(position, newAssignment);
+
                 })
                 .setNegativeButton("Cancel", (dialog, id) -> {
                 });
 
         AlertDialog dialog = builder.create();
         dialog.show();
+
+        Button deleteTaskButton = dialogView.findViewById(R.id.delete_task);
+        deleteTaskButton.setOnClickListener((v1) -> {
+            taskViewModel.remove(position);
+            dialog.dismiss();
+        });
     }
 }

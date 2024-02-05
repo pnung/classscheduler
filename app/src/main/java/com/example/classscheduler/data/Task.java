@@ -62,7 +62,6 @@ public class Task {
 
         @Override
         public int compare(Task o1, Task o2) {
-            System.out.println("chrono sort");
             System.out.println(o1.primaryDateAndTime.getDay());
             System.out.println(o2.primaryDateAndTime.getDay());
             if (o1.primaryDateAndTime.getYear() != o2.primaryDateAndTime.getYear()) {

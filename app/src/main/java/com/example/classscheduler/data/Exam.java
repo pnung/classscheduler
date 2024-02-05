@@ -1,41 +1,28 @@
 package com.example.classscheduler.data;
 
+import java.util.Date;
+
 public class Exam extends Task {
 
-    private String examDate;
-    private String examStartTime;
-    private String examEndTime;
-    private String examDuration;
+    private DateAndTime examEndTime;
+    private String course;
 
-    public Exam(String name, String examDate, String examStartTime, String examEndTime, String examDuration) {
-        super(name);
-        this.examDate = examDate;
-        this.examStartTime = examStartTime;
-        this.examDuration = examDuration;
+    public Exam(String name, DateAndTime examStartTime, DateAndTime examEndTime, String course) {
+        super(name, "", examStartTime);
+        this.examEndTime = examEndTime;
+        this.course = course;
     }
 
-    public String getExamDate() {
-        return examDate;
+    public Exam(String name) {
+        this(name, new DateAndTime(), new DateAndTime(), "");
     }
 
-    public void setExamDate(String newExamDate) {
-        examDate = newExamDate;
-    }
-
-    public String getExamStartTime() {
-        return examStartTime;
-    }
-
-    public void setExamStartTime(String newExamStartTime) {
-        examStartTime = newExamStartTime;
-    }
-
-    public String getExamEndTime() {
+    public DateAndTime getExamEndTime() {
         return examEndTime;
     }
 
-    public void setExamEndTime(String newExamEndTime) {
-        examEndTime = newExamEndTime;
+    public String getCourse() {
+        return course;
     }
 
 }
