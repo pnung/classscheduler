@@ -33,6 +33,19 @@
         app:layout_constraintTop_toBottomOf="@+id/courseName" />
 
     <TextView
+        android:id="@+id/courseDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:paddingLeft="5dp"
+        android:text="MWF"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:paddingStart="10dp"
+        app:layout_constraintStart_toEndOf="@id/courseTime"
+        app:layout_constraintTop_toBottomOf="@+id/courseName" />
+
+    <TextView
         android:id="@+id/instructorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

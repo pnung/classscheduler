@@ -183,6 +183,7 @@ public class HomeFragment extends Fragment {
             viewHolder.getCourseNameView().setText(course.getName());
             viewHolder.getCourseTimeView().setText(course.getCourseTime());
             viewHolder.getInstructorNameView().setText(course.getInstructorName());
+            viewHolder.getCourseDaysView().setText(course.getCourseDays());
 
             String[] items = new String[]{"Options", "Edit", "Remove"};
             ArrayAdapter<String> adapter = new ArrayAdapter<>(viewHolder.itemView.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
@@ -217,6 +218,7 @@ public class HomeFragment extends Fragment {
         class ViewHolder extends RecyclerView.ViewHolder {
             private final TextView courseNameView;
             private final TextView courseTimeView;
+            private final TextView courseDaysView;
             private final TextView instructorNameView;
             private final Spinner courseOptionsSpinner;
             private boolean userSelected = false;
@@ -225,6 +227,7 @@ public class HomeFragment extends Fragment {
                 super(view);
                 courseNameView = view.findViewById(R.id.courseName);
                 courseTimeView = view.findViewById(R.id.courseTime);
+                courseDaysView = view.findViewById(R.id.courseDays);
                 instructorNameView = view.findViewById(R.id.instructorName);
                 courseOptionsSpinner = view.findViewById(R.id.course_options_spinner);
 
@@ -262,6 +265,10 @@ public class HomeFragment extends Fragment {
 
             TextView getCourseTimeView() {
                 return courseTimeView;
+            }
+
+            TextView getCourseDaysView() {
+                return courseDaysView;
             }
 
             TextView getInstructorNameView() {
