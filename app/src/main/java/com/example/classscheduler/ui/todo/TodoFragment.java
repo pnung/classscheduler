@@ -55,11 +55,11 @@ public class TodoFragment extends Fragment {
         }
 
         AppCompatSpinner sortOptionsDropdown = root.findViewById(R.id.sort_options_dropdown);
-        sortOptionsDropdown.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, new String[]{"Time", "Name", "Type", "Class"}));
+        sortOptionsDropdown.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, new String[]{"Time", "Name"}));
 
         //Adding type of task (exam, assignment, task)
         AppCompatSpinner addOptionsDropdown = root.findViewById(R.id.add_options_dropdown);
-        addOptionsDropdown.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, new String[] {"Assignment", "Task", "Exam"}));
+        addOptionsDropdown.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, new String[] {"Task","Assignment","Exam"}));
 
 
         sortOptionsDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
