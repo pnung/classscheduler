@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="330dp"
-    android:layout_height="100dp"
+    android:layout_height="110dp"
     android:layout_margin="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
