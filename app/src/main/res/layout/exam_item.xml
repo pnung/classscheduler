@@ -34,6 +34,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/courseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="right"
+        android:text="class"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/examLabel" />
+
+    <TextView
         android:id="@+id/examDate"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
