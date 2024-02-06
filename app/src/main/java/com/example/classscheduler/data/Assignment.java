@@ -10,7 +10,7 @@ public class Assignment extends Task {
 
     public Assignment(String name, String description, DateAndTime dateAndTime, String course) {
         super(name, description, dateAndTime);
-        this.courseName = name;
+        this.courseName = course;
     }
 
     public String getCourseName() {
