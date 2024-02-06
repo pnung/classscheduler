@@ -24,7 +24,7 @@
         tools:layout_editor_absoluteX="16dp" />
 
     <EditText
-        android:id="@+id/set_exam_course"
+        android:id="@+id/set_assignment_course"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Course"
@@ -38,7 +38,7 @@
         android:layout_margin="0dp"
         android:padding="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/set_exam_course" />
+        app:layout_constraintTop_toBottomOf="@+id/set_assignment_course" />
 
     <Spinner
         android:id="@+id/select_day_spinner"
@@ -47,7 +47,7 @@
         android:layout_margin="0dp"
         android:padding="0dp"
         app:layout_constraintStart_toEndOf="@id/select_month_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/set_exam_course" />
+        app:layout_constraintTop_toBottomOf="@+id/set_assignment_course" />
 
     <Spinner
         android:id="@+id/select_year_spinner"
@@ -56,7 +56,7 @@
         android:layout_margin="0dp"
         android:padding="0dp"
         app:layout_constraintStart_toEndOf="@id/select_day_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/set_exam_course" />
+        app:layout_constraintTop_toBottomOf="@+id/set_assignment_course" />
 
     <Spinner
         android:id="@+id/select_hour_spinner"

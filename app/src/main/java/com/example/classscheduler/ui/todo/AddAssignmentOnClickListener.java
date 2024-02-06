@@ -97,7 +97,7 @@ public class AddAssignmentOnClickListener implements View.OnClickListener {
                 .setPositiveButton("Add", (dialog, id) -> {
                     EditText setTaskName = dialogView.findViewById(R.id.set_task_name);
                     EditText setTaskDescription = dialogView.findViewById(R.id.set_task_description);
-                    EditText setAssignmentCourse = dialogView.findViewById(R.id.set_exam_course);
+                    EditText setAssignmentCourse = dialogView.findViewById(R.id.set_assignment_course);
 
                     Task newTask = new Assignment(
                             setTaskName.getText().toString(),

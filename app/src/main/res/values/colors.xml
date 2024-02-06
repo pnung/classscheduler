@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="todo_list_item_background">#EEA7F8</color>
     <color name="red">#D51010</color>
+    <color name ="primary">#D1D1D1</color>
 </resources>
