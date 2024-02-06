@@ -13,23 +13,13 @@
 
     <TextView
         android:id="@+id/taskName"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
+        android:layout_width="200dp"
+        android:layout_height="90dp"
         android:fontFamily="@font/poppins"
         android:text="name"
         android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/taskDescription"
-        android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/open_sans"
-        android:text="description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskName" />
 
     <TextView
         android:id="@+id/taskDueDate"
@@ -51,4 +41,15 @@
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/courseName"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="right"
+        android:text="Course"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taskType" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -96,12 +96,10 @@ public class AddAssignmentOnClickListener implements View.OnClickListener {
                 .setTitle("Add New Assignment")
                 .setPositiveButton("Add", (dialog, id) -> {
                     EditText setTaskName = dialogView.findViewById(R.id.set_task_name);
-                    EditText setTaskDescription = dialogView.findViewById(R.id.set_task_description);
                     EditText setAssignmentCourse = dialogView.findViewById(R.id.set_assignment_course);
 
                     Task newTask = new Assignment(
                             setTaskName.getText().toString(),
-                            setTaskDescription.getText().toString(),
                             new DateAndTime(
                                     (int) selectYearSpinner.getSelectedItem(),
                                     DateAndTime.getMonthNumberFromString(selectMonthSpinner.getSelectedItem().toString()),

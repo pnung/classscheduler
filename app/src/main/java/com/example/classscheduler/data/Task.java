@@ -4,32 +4,27 @@ import java.util.Comparator;
 
 public class Task {
     private String name;
-    private String description;
     private DateAndTime primaryDateAndTime;
     private String course;
 
-    public Task(String name, String description, DateAndTime dateAndTime, String course) {
+    public Task(String name, DateAndTime dateAndTime, String course) {
         System.out.println("creating task");
         this.name = name;
-        this.description = description;
         this.primaryDateAndTime = dateAndTime;
         this.course = course;
     }
 
     public Task(String name) {
-        this(name, "", new DateAndTime(), "");
+        this(name, new DateAndTime(), "");
     }
 
     @Override
     public String toString() {
-        return String.format("name: %s, description: %s", name, description);
+        return String.format("name: %s", name);
     }
 
     public String getName() {
         return name;
-    }
-    public String getDescription() {
-        return description;
     }
 
     public String getCardTime() {
@@ -42,9 +37,6 @@ public class Task {
 
     public void setName(String newName) {
         name = newName;
-    }
-    public void setDescription(String newDescription) {
-        description = newDescription;
     }
 
     public DateAndTime getPrimaryDateAndTime() {

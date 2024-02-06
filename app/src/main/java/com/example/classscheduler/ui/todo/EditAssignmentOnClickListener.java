@@ -82,9 +82,6 @@ public class EditAssignmentOnClickListener implements View.OnClickListener {
         EditText setTaskName = dialogView.findViewById(R.id.set_task_name);
         setTaskName.setText(currentAssignment.getName());
 
-        EditText setTaskDescription = dialogView.findViewById(R.id.set_task_description);
-        setTaskDescription.setText(currentAssignment.getDescription());
-
         EditText setAssignmentCourse = dialogView.findViewById(R.id.set_exam_course);
         setAssignmentCourse.setText(currentAssignment.getCourse());
 
@@ -128,7 +125,6 @@ public class EditAssignmentOnClickListener implements View.OnClickListener {
 
                     Assignment newAssignment = new Assignment(
                             setTaskName.getText().toString(),
-                            setTaskDescription.getText().toString(),
                             new DateAndTime(
                                     (int) selectYearSpinner.getSelectedItem(),
                                     DateAndTime.getMonthNumberFromString(selectMonthSpinner.getSelectedItem().toString()),

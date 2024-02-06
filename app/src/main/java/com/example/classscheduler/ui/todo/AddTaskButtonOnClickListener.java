@@ -99,11 +99,10 @@ public class AddTaskButtonOnClickListener implements View.OnClickListener {
                 .setTitle("Add New Task")
                 .setPositiveButton("Add", (dialog, id) -> {
                     EditText setTaskName = dialogView.findViewById(R.id.set_task_name);
-                    EditText setTaskDescription = dialogView.findViewById(R.id.set_task_description);
+                    EditText setTaskCourse = dialogView.findViewById(R.id.set_task_course);
 
                     Task newTask = new Task(
                             setTaskName.getText().toString(),
-                            setTaskDescription.getText().toString(),
                             new DateAndTime(
                                     (int) selectYearSpinner.getSelectedItem(),
                                     DateAndTime.getMonthNumberFromString(selectMonthSpinner.getSelectedItem().toString()),
@@ -112,7 +111,7 @@ public class AddTaskButtonOnClickListener implements View.OnClickListener {
                                     (int) selectHourSpinner.getSelectedItem(),
                                     Integer.parseInt(selectMinuteSpinner.getSelectedItem().toString())
                             ),
-                            "None"
+                            setTaskCourse.getText().toString()
                     );
                     taskViewModel.addTask(newTask);
                 })

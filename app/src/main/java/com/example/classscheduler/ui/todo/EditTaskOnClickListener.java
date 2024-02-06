@@ -86,8 +86,8 @@ public class EditTaskOnClickListener implements View.OnClickListener {
         EditText setTaskName = dialogView.findViewById(R.id.set_task_name);
         setTaskName.setText(currentTask.getName());
 
-        EditText setTaskDescription = dialogView.findViewById(R.id.set_task_description);
-        setTaskDescription.setText(currentTask.getDescription());
+        EditText setTaskCourse = dialogView.findViewById(R.id.set_task_course);
+        setTaskCourse.setText(currentTask.getCourse());
 
         days = new Integer[DateAndTime.getNumberOfDays(DateAndTime.getMonthStringFromNumber(currentTask.getPrimaryDateAndTime().getMonth()))];
         for (int i = 0; i < days.length; i++) days[i] = i+1;
@@ -129,7 +129,6 @@ public class EditTaskOnClickListener implements View.OnClickListener {
 
                     Task newTask = new Task(
                             setTaskName.getText().toString(),
-                            setTaskDescription.getText().toString(),
                             new DateAndTime(
                                     (int) selectYearSpinner.getSelectedItem(),
                                     DateAndTime.getMonthNumberFromString(selectMonthSpinner.getSelectedItem().toString()),
@@ -138,7 +137,7 @@ public class EditTaskOnClickListener implements View.OnClickListener {
                                     (int) selectHourSpinner.getSelectedItem(),
                                     Integer.parseInt(selectMinuteSpinner.getSelectedItem().toString())
                             ),
-                            "None"
+                            setTaskCourse.getText().toString()
                     );
                     taskViewModel.set(position, newTask);
 
