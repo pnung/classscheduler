@@ -8,9 +8,8 @@ public class Exam extends Task {
     private String course;
 
     public Exam(String name, DateAndTime examStartTime, DateAndTime examEndTime, String course) {
-        super(name, "", examStartTime);
+        super(name, "", examStartTime, course);
         this.examEndTime = examEndTime;
-        this.course = course;
     }
 
     public Exam(String name) {

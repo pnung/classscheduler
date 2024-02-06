@@ -55,7 +55,7 @@ public class TodoFragment extends Fragment {
         }
 
         AppCompatSpinner sortOptionsDropdown = root.findViewById(R.id.sort_options_dropdown);
-        sortOptionsDropdown.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, new String[]{"Time", "Name"}));
+        sortOptionsDropdown.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, new String[]{"Time", "Course", "Name",}));
 
         //Adding type of task (exam, assignment, task)
         AppCompatSpinner addOptionsDropdown = root.findViewById(R.id.add_options_dropdown);
@@ -70,6 +70,8 @@ public class TodoFragment extends Fragment {
                     taskViewModel.setSorter("Time");
                 } else if (selectedSort.equals("Name")) {
                     taskViewModel.setSorter("Name");
+                } else {
+                    taskViewModel.setSorter("Course");
                 }
                 //Collections.sort(taskArrayListAdapter.getLocalDataSet(), currentSorter);
                 //taskArrayListAdapter.updateData(taskArrayListAdapter.getLocalDataSet());
@@ -152,14 +154,15 @@ public class TodoFragment extends Fragment {
             if (task instanceof Assignment) {
                 Assignment assignment = (Assignment) task;
                 viewHolder.getTaskDescriptionView().setText(assignment.getDescription());
-                viewHolder.getCourseName().setText(assignment.getCourseName());
                 viewHolder.getTaskNameView().setText(assignment.getName());
+                viewHolder.getTaskCourseView().setText(assignment.getCourse());
             } else if (task instanceof Exam) {
                 Exam exam = (Exam) task;
-                viewHolder.getExamDate().setText(exam.getPrimaryDateAndTime().getDateString());
-                viewHolder.getExamEndTime().setText(exam.getExamEndTime().getTimeString());
+                viewHolder.getExamDateView().setText(exam.getPrimaryDateAndTime().getDateString());
+                viewHolder.getExamEndTimeView().setText(exam.getExamEndTime().getTimeString());
                 viewHolder.getTaskDueDateView().setText(exam.getPrimaryDateAndTime().getTimeString());
-            } else {
+                viewHolder.getTaskCourseView().setText(exam.getCourse());
+            } else { // TASK
                 viewHolder.getTaskDescriptionView().setText(task.getDescription());
                 viewHolder.getTaskDueDateView().setText(task.getCardTime());
             }
@@ -184,9 +187,9 @@ public class TodoFragment extends Fragment {
             private TextView taskDescriptionView;
             private TextView taskDueDateView;
             private View view;
-            private TextView courseName;
-            private TextView examEndTime;
-            private TextView examDate;
+            private TextView taskCourseView;
+            private TextView examEndTimeView;
+            private TextView examDateView;
 
             //initiating the text boxes
             ViewHolder(View view, int viewType) {
@@ -195,18 +198,19 @@ public class TodoFragment extends Fragment {
                 taskNameView = view.findViewById(R.id.taskName);
                 taskDueDateView = view.findViewById(R.id.taskDueDate);
 
-                if (viewType == 1) {
-                    courseName = view.findViewById(R.id.courseName);
+                if (viewType == 1) { // assignment
+                    taskCourseView = view.findViewById(R.id.courseName);
                     taskDescriptionView = view.findViewById(R.id.taskDescription);
                 }
 
-                if (viewType == 2) {
-                    courseName = view.findViewById(R.id.courseName);
-                    examEndTime = view.findViewById(R.id.examEndTime);
-                    examDate =view.findViewById(R.id.examDate);
+                if (viewType == 2) { // exam
+                    taskCourseView = view.findViewById(R.id.courseName);
+                    System.out.println(taskCourseView);
+                    examEndTimeView = view.findViewById(R.id.examEndTime);
+                    examDateView =view.findViewById(R.id.examDate);
                 }
 
-                if (viewType == 0) {
+                if (viewType == 0) { // task
                     taskDescriptionView = view.findViewById(R.id.taskDescription);
                 }
             }
@@ -233,16 +237,16 @@ public class TodoFragment extends Fragment {
                 return taskDueDateView;
             }
 
-            public TextView getCourseName() {
-                return courseName;
+            public TextView getTaskCourseView() {
+                return taskCourseView;
             }
 
-            public TextView getExamEndTime() {
-                return examEndTime;
+            public TextView getExamEndTimeView() {
+                return examEndTimeView;
             }
 
-            public TextView getExamDate() {
-                return examDate;
+            public TextView getExamDateView() {
+                return examDateView;
             }
         }
     }

@@ -137,7 +137,8 @@ public class EditTaskOnClickListener implements View.OnClickListener {
                                     selectAmOrPmSpinner.getSelectedItem().toString().equals("PM"),
                                     (int) selectHourSpinner.getSelectedItem(),
                                     Integer.parseInt(selectMinuteSpinner.getSelectedItem().toString())
-                            )
+                            ),
+                            "None"
                     );
                     taskViewModel.set(position, newTask);
 

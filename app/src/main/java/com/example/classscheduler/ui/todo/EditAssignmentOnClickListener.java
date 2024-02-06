@@ -86,7 +86,7 @@ public class EditAssignmentOnClickListener implements View.OnClickListener {
         setTaskDescription.setText(currentAssignment.getDescription());
 
         EditText setAssignmentCourse = dialogView.findViewById(R.id.set_exam_course);
-        setAssignmentCourse.setText(currentAssignment.getCourseName());
+        setAssignmentCourse.setText(currentAssignment.getCourse());
 
         days = new Integer[DateAndTime.getNumberOfDays(DateAndTime.getMonthStringFromNumber(currentAssignment.getPrimaryDateAndTime().getMonth()))];
         for (int i = 0; i < days.length; i++) days[i] = i+1;

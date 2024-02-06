@@ -111,7 +111,8 @@ public class AddTaskButtonOnClickListener implements View.OnClickListener {
                                     selectAmOrPmSpinner.getSelectedItem().toString().equals("PM"),
                                     (int) selectHourSpinner.getSelectedItem(),
                                     Integer.parseInt(selectMinuteSpinner.getSelectedItem().toString())
-                            )
+                            ),
+                            "None"
                     );
                     taskViewModel.addTask(newTask);
                 })

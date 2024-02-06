@@ -14,6 +14,7 @@ public class TaskViewModel extends ViewModel {
 
     private Comparator<Task> chronologicalSorter = new Task.ChronologicalSort();
     private Comparator<Task> alphabeticalSorter = new Task.AlphabeticalSort();
+    private Comparator<Task> courseSorter = new Task.CourseSort();
     private Comparator<Task> currentSorter = chronologicalSorter;
 
     public TaskViewModel() {
@@ -55,6 +56,8 @@ public class TaskViewModel extends ViewModel {
             currentSorter = chronologicalSorter;
         } else if (sorter.equals("Name")) {
             currentSorter = alphabeticalSorter;
+        } else {
+            currentSorter = courseSorter;
         }
         sort();
     }
@@ -63,8 +66,5 @@ public class TaskViewModel extends ViewModel {
         ArrayList<Task> currentTasks = tasks.getValue();
         Collections.sort(currentTasks, currentSorter);
         tasks.setValue(currentTasks);
-        if (currentSorter == alphabeticalSorter) {
-            System.out.println("sorting alphabetically");
-        }
     }
 }
