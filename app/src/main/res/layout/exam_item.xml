@@ -14,10 +14,10 @@
 
     <TextView
         android:id="@+id/taskName"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
-        android:text="PHYS Midterm"
+        android:text="Midterm"
         android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,7 @@
         android:id="@+id/examLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/poppins"
         android:gravity="right"
         android:text="Exam"
         android:textSize="18dp"
@@ -40,7 +40,7 @@
         android:fontFamily="@font/poppins_semibold"
         android:gravity="right"
         android:text="class"
-        android:textSize="18dp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/examLabel" />
 
