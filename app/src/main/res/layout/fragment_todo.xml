@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.todo.TodoFragment">
+    tools:context=".ui.todo.TodoFragment"
+    android:background="#FFFFFF">
 
     <Button
         android:id="@+id/todo_task_add_button"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginBottom="164dp"
+        android:backgroundTint="#222222"
         android:text="Button"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
