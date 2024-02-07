@@ -46,7 +46,7 @@
 
     <TextView
         android:id="@+id/examDate"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:gravity="right"
